@@ -32,3 +32,5 @@
 6. SQLの操作
 7. Webアプリケーション基礎となるTodoアプリ（CRUD処理）
 8. 並行処理入門　＋　並行処理パターン集
+## 言語詳細
+document　dir　go_lang.md に記述
