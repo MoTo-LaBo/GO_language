@@ -7,6 +7,9 @@
 - package import
 ### 3. terminal で実行
     go run <file name>.go
+
+    # command
+    ctr + option + N
 - go が用意する簡易 command
 - file まで移動して run　する
 ## Go codeを保存する場所
