@@ -3,10 +3,63 @@ package main
 /* 型 : int, float, uint, coplex, bool, string, byte */
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
 func main() {
+	/* --------------- defer 最も使用される処理 --------------- */
+	/* defer文を使用した resource の解放処理
+	file作成 -> 書き込み・追記 -> Close
+	*/
+	file, err := os.OpenFile("Go_lang/02_基本型/02_document.txt", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer file.Close()
+	fmt.Fprintln(file, "Go 言語基礎 : 基本型\n ")
+	fmt.Fprintln(file, `
+	---------- int　(integer : 整数) ----------
+
+	- 環境依存 :　pc環境によって　int8,16,32,64 という風に数値が変わる
+	`, "\n ")
+	fmt.Fprintln(file, `
+	----------- 浮動小数点型 ( float ) ----------
+
+	- var fl64 float64 = 2.4
+	- fl := 3.2 // 暗黙的な定義の場合は自動で float64 ※ 環境依存では無い
+
+
+	--------- string　(string : 文字列型) ----------
+
+	- 文字列はバイト配列の集まり
+	- var s string = "Hello Golang"
+
+
+	---------- byte　(uint8 : byte型) ----------
+
+	- slice : 配列を表現できる型
+	- byte型 -> 文字列へ変換 : ASCII で表している
+
+
+	---------- interface & nill ----------
+
+	- {}を含めて１つの型
+		あらゆる型と互換性がある特殊な型
+	- int, string, float, bool... 全て
+		初期値 : nil -> python の NaN にあたる(何も値を持たない)あくまで全ての型を汎用的に表す手段
+	- data 特有の計算や演算はできないので注意
+		x = 2
+		fmt.Println(x + 3)
+
+
+	-------------------- 型変換 --------------------
+	- 文字列型 -> 数値型への変換する関数 : strconv.Atoi()
+		-> 値を２つ返す
+	- _ (アンダーバー)は、受け取った値を破棄してくれる
+		定義した変数は必ず使用するというルールがあるので,回避できる
+
+	`)
 
 	/* ---------- int　(integer : 整数) ---------- */
 	// 環境依存 :　pc環境によって　int8,16,32,64 という風に数値が変わる
