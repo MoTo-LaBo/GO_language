@@ -43,7 +43,80 @@ Go 言語基礎 : 参照型
 	--------------- 可変長引数 ---------------
 
 	引数に数を指定しなで渡すことができる
+	
 
+	--------------- map / Key : value ---------------
 
+	Key : value で値を作成して, Key : value で値を取得できる
 
+	・Go言語は nil = None のように値が入っていないものを取得しようとすると
+		- None ではなく初期値が返ってくる
+		- 登録されていないモノは初期値が返ってくる
+
+	・Go言語の基本型は nil のように特殊な値を持たないので
+		- 何も存在しないまま処理を実行してしまうミスも起こりやす
+
+	・上記を踏まえ map() には error  handling の機能も付いている
+		- ok を使用して値が取得出来たかどうかを True or False で判定する
+		- if !ok { 処理 fmt.Println("error")} のように
+			- if文を使用して、値が取り出せなかった時の処理を記述
+	
+
+	/* --------------- channel --------------- */
+
+	複数のゴルーチン間でのdataの受け渡しをする為に設計されたdata構造
+		1. 宣言
+		2. 操作
+
+	・channel は data の送受信を行うdata構造
+		- sub type を使用して送信・受信を明示的に指定する事もできる
+		- 指定しない場合は双方向のchannel になる
+		- 複数のgoroutine(ゴルーチン)間でのやりとりなので ch1(1つだけ)では deadloc!
+
+	・make(chan 型)関数で channel として機能を持たせる事ができる
+		- make によって初期化が行われて、書き込み・読み込みができるようになる
+
+	・cap()
+		- 容量(data size / buffer size)を調べる事ができる
+		- バッファサイズを指定して作成する事もできる
+
+	・queue (キュー) = buffer size
+		- 最初に投入したデータが最初に出力される
+		- 「First-in, First-out」（FIFO）型のデータ構造
+		- dataを取り出す順番が保証される
+
+		- buffer size を超えた量のdataを送った場合...
+			- fatal error : all goroutines are asleep - deadlock!
+	
+
+	--------------- channel close ---------------
+
+	Close された channel から送信はできない。受信はできる
+		- ※ 受信は初期値 (0の状態) が返ってくる
+
+	i, ok で Close された ch の値を確認すると
+		- i : 初期値 , ok : boolean (True or False)
+		- ch の open状態が返ってくる
+		- 厳密には...
+			channel の buffer内が空で chが Close された状態 = False
+			値を送信後 <- Close では buffer に値が受信(入る)ので
+			Close されていても True が返されるj
+	
+
+	--------------- channel select ---------------
+
+	複数の channel を処理する時どちらかの ch に error が出た時に他の program が止まってしまう
+		- select文はそれを防いでくれる
+		- 複数の goroutine を制御してくれる
+
+	select
+		- select case の内部は channel の処理
+			- ch 出ないと error になってしまう
+		- 送受信はどちらでも大丈夫
+		- switch文の case とは少し違う
+			- 最初に成立した case が優先されるのではなくランダムに実行される
+		- default
+			- case に当てはまらない時に適用される
+
+		select文を使用する事で適切に非同期処理ができるようになっている
 	
