@@ -1,0 +1,31 @@
+Go言語基礎 : interface
+ 
+	--------------- defer 最も使用される処理 ---------------
+
+	defer文を使用した resource の解放処理 : file作成 -> 書き込み・追記 -> Close
+
+
+	--------------- interface型 ---------------
+
+	・ Stringfy と言う interface型でまとめて扱うことができる
+		- for文で回して共通の method を使用できる
+
+		- 型の性質を抽出した interface を使用すると Go の厳密な型の system に
+		柔軟性を与える事ができる
+
+
+	--------------- カスタムerror (interface) ---------------
+
+	・ Go の Error() と言う interface型と共通の性質を持つものとして扱えるようになる
+
+	・ 変数の error は program 上はあくまで Error型の変数なので, 独自でカスタムした
+		フィールドには access できない
+		- フィールドに access する場合は, 型参照を使用して復元してフィールドに access する
+
+
+	--------------- Stringer (interface) ---------------
+
+	・ fmt package に定義されている Stringer型
+		- simple 文字列を返す
+
+	
